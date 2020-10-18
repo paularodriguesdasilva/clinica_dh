@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `receita`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `receita` (
   `id_receita` int(11) NOT NULL AUTO_INCREMENT,
-  `descricao` varchar(100) NOT NULL,
-  `tempo` int(11) NOT NULL,
-  `dosagem` varchar(45) NOT NULL,
-  `consulta_id_consulta` int(11) NOT NULL,
+  `descricao` varchar(150) NOT NULL,
+  `tempo` varchar(45) NOT NULL,
+  `dosagem` varchar(100) NOT NULL,
+  `fk_id_consulta` int(11) NOT NULL,
   PRIMARY KEY (`id_receita`),
   KEY `fk_receita_consulta1_idx` (`consulta_id_consulta`),
   CONSTRAINT `fk_receita_consulta1` FOREIGN KEY (`consulta_id_consulta`) REFERENCES `consulta` (`id_consulta`) ON DELETE NO ACTION ON UPDATE NO ACTION
