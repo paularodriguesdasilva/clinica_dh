@@ -15,7 +15,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import br.com.dh.clinica.model.entities.Consulta;
+import br.com.dh.clinica.model.entities.Paciente;
 import br.com.dh.clinica.model.repositories.ConsultaRepository;
+import br.com.dh.clinica.model.repositories.PacienteRepository;
 
 
 @RunWith(SpringRunner.class)
@@ -27,6 +29,18 @@ public class ConsultaRepositoryTest {
 	@Autowired
 	ConsultaRepository consultaRepository;
 	
+	@Autowired
+	PacienteRepository pacienteRepository;
+	
+	public Paciente pacienteTest() {
+		Paciente paciente = new Paciente("Ana Julia Bento", "Rua das Couves, 50", "2013-03-25", "1155555-5555",
+                "2020-10-15", "ana@ana.com.br", 40.00, 1.30,"333.333.333-00");
+
+        this.pacienteRepository.save(paciente);
+        
+        return paciente;
+	}
+	
 	@BeforeClass
 	public static void setupValidatorInstance() {
 	    validator = Validation.buildDefaultValidatorFactory().getValidator();
@@ -34,7 +48,9 @@ public class ConsultaRepositoryTest {
 	
 	@Test
 	public void verificaIdConsultaNull() {
-		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 		
 		this.consultaRepository.save(consulta);
 		
@@ -45,7 +61,9 @@ public class ConsultaRepositoryTest {
 	
 	@Test
 	public void verificaDataConsultaNull() {
-		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 		
 		this.consultaRepository.save(consulta);
 		
@@ -56,7 +74,9 @@ public class ConsultaRepositoryTest {
 	
 	@Test
 	public void verificaValorConsultaNull() {
-		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 		
 		this.consultaRepository.save(consulta);
 		
@@ -67,7 +87,9 @@ public class ConsultaRepositoryTest {
 	
 	@Test
 	public void verificaMedicoConsultaNull() {
-		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 		
 		this.consultaRepository.save(consulta);
 		
@@ -78,18 +100,22 @@ public class ConsultaRepositoryTest {
 	
 	@Test
 	public void verificaIdClienteConsultaNull() {
-		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 		
 		this.consultaRepository.save(consulta);
 		
 		Consulta clienteDb = this.consultaRepository.findById(consulta.getId_consulta());
 		
-		Assertions.assertThat(clienteDb.getFk_id_paciente()).isNotNull();
+		Assertions.assertThat(clienteDb.getPaciente()).isNotNull();
 	}
 	
 	@Test
 	public void notAddConsultaDataNull() {	
-		Consulta consulta = new Consulta(null, 150.99, "Consulta de teste", "Dr. Teste", 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 		
 	    Set<ConstraintViolation<Consulta>> violations = validator.validate(consulta);
 	 
@@ -98,7 +124,9 @@ public class ConsultaRepositoryTest {
 	
 	@Test
 	public void notAddConsultaDataVazio() {
-		Consulta consulta = new Consulta("", 150.99, "Consulta de teste", "Dr. Teste", 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 		
 	    Set<ConstraintViolation<Consulta>> violations = validator.validate(consulta);
 	 
@@ -107,7 +135,9 @@ public class ConsultaRepositoryTest {
 	
 	@Test
 	public void notAddConsultaDataBranco() {
-		Consulta consulta = new Consulta(" ", 150.99, "Consulta de teste", "Dr. Teste", 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 		
 		Set<ConstraintViolation<Consulta>> violations = validator.validate(consulta);
 		 
@@ -116,7 +146,9 @@ public class ConsultaRepositoryTest {
 	
 	@Test
 	public void notAddConsultaMedicoNull() {
-		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", null, 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 		
 		Set<ConstraintViolation<Consulta>> violations = validator.validate(consulta);
 		 
@@ -125,7 +157,9 @@ public class ConsultaRepositoryTest {
 	
 	@Test
 	public void notAddConsultaMedicoVazio() {
-		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "", 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 		
 		Set<ConstraintViolation<Consulta>> violations = validator.validate(consulta);
 		 
@@ -134,7 +168,9 @@ public class ConsultaRepositoryTest {
 	
 	@Test
 	public void notAddConsultaMedicoBranco() {
-		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", " ", 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 		
 		Set<ConstraintViolation<Consulta>> violations = validator.validate(consulta);
 		 
@@ -143,7 +179,9 @@ public class ConsultaRepositoryTest {
 	
 	@Test
 	public void notAddConsultaValorNegativo() {
-		Consulta consulta = new Consulta("2020-10-18", -150.99, "Consulta de teste", "Dr. Teste", 1);
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
 
 		Set<ConstraintViolation<Consulta>> violations = validator.validate(consulta);
 		 

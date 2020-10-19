@@ -16,6 +16,8 @@ import br.com.dh.clinica.model.repositories.PacienteRepository;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class PacienteRepositoryTest {
 	
+	/*Testes desenvolvidos pela Paula Rodrigues*/
+	
 	@Autowired
 	PacienteRepository pacienteRepository;
 	

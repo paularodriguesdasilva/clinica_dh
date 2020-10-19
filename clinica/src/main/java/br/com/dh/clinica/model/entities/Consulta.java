@@ -4,8 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Consulta {
@@ -24,16 +28,20 @@ public class Consulta {
 	
 	@NotBlank(message = "Médico deve ter um valor")
 	private String medico;
-	private int fk_id_paciente;
+	
+	@ManyToOne
+	@JoinColumn(name = "fk_id_paciente")
+	@JsonIgnoreProperties({"pedidos", "fk_id_paciente"})
+	private Paciente paciente;
 	
 	public Consulta() {}
 	
-	public Consulta(String data_consulta, double valor, String descricao, String medico, int fk_id_paciente) {		
+	public Consulta(String data_consulta, double valor, String descricao, String medico, Paciente paciente) {		
 		this.data_consulta = data_consulta;
 		this.valor = valor;
 		this.descricao = descricao;
 		this.medico = medico;
-		this.fk_id_paciente = fk_id_paciente;
+		this.paciente = paciente;
 	}
 
 	public int getId_consulta() {
@@ -72,12 +80,12 @@ public class Consulta {
 		this.medico = medico;
 	}
 
-	public int getFk_id_paciente() {
-		return fk_id_paciente;
+	public Paciente getPaciente() {
+		return paciente;
 	}
 
-	public void setFk_id_paciente(int fk_id_paciente) {
-		this.fk_id_paciente = fk_id_paciente;
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 	
 	

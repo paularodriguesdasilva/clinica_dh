@@ -8,7 +8,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import br.com.dh.clinica.model.entities.Consulta;
 import br.com.dh.clinica.model.entities.Paciente;
+import br.com.dh.clinica.model.repositories.ConsultaRepository;
 import br.com.dh.clinica.model.repositories.PacienteRepository;
 
 @RunWith(SpringRunner.class)
@@ -24,18 +26,28 @@ public class ReceitaRepositoryTest {
 	@Autowired
 	ConsultaRepository consultaRepository;
 	
-	@Test
-    public void verificaIdReceitaNull() {
+	public Paciente pacienteTest() {
 		Paciente paciente = new Paciente("Ana Julia Bento", "Rua das Couves, 50", "2013-03-25", "1155555-5555",
                 "2020-10-15", "ana@ana.com.br", 40.00, 1.30,"333.333.333-00");
 
         this.pacienteRepository.save(paciente);
         
-        
-        Consulta consulta = new Consulta ("2020-10-14", 70.00, "", "Dr. Aurelio", paciente);
-        
-        this.consultaRepository.save(consulta);
-        
+        return paciente;
+	}
+	
+	public Consulta consultaTest() {
+		Paciente paciente = pacienteTest();
+		
+		Consulta consulta = new Consulta("2020-10-18", 150.99, "Consulta de teste", "Dr. Teste", paciente);
+		
+		this.consultaRepository.save(consulta);
+		
+		return consulta;
+	}
+	
+	@Test
+    public void verificaIdReceitaNull() {
+		Consulta consulta = consultaTest();
         
         Receita receita = new Receita ("Amoxilina 500mg - comprimido. Uso externo", "7 dias", "Um comprimido de 8/8 horas", consulta);
 
@@ -48,17 +60,8 @@ public class ReceitaRepositoryTest {
 
     @Test
     public void verificaConsultaNull() {
-    	Paciente paciente = new Paciente("Ana Julia Bento", "Rua das Couves, 50", "2013-03-25", "1155555-5555",
-                "2020-10-15", "ana@ana.com.br", 40.00, 1.30,"333.333.333-00");
-
-        this.pacienteRepository.save(paciente);
-        
-        
-        Consulta consulta = new Consulta ("2020-10-14", 70.00, "", "Dr. Aurelio", paciente);
-        
-        this.consultaRepository.save(consulta);
-        
-        
+    	Consulta consulta = consultaTest();
+    	
         Receita receita = new Receita ("Amoxilina 500mg - comprimido. Uso externo", "7 dias", "Um comprimido de 8/8 horas", consulta);
 
         this.receitaRepository.save(receita);
@@ -70,16 +73,7 @@ public class ReceitaRepositoryTest {
 
     @Test
     public void verificaReceitaEstaSalva() {
-    	Paciente paciente = new Paciente("Ana Julia Bento", "Rua das Couves, 50", "2013-03-25", "1155555-5555",
-                "2020-10-15", "ana@ana.com.br", 40.00, 1.30,"333.333.333-00");
-
-        this.pacienteRepository.save(paciente);
-        
-        
-        Consulta consulta = new Consulta ("2020-10-14", 70.00, "", "Dr. Aurelio", paciente);
-        
-        this.consultaRepository.save(consulta);
-        
+    	Consulta consulta = consultaTest();
         
         Receita receita = new Receita ("Amoxilina 500mg - comprimido. Uso externo", "7 dias", "Um comprimido de 8/8 horas", consulta);
 

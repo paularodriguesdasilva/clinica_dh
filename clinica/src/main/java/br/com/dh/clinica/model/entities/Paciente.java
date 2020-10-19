@@ -1,10 +1,15 @@
 package br.com.dh.clinica.model.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,6 +41,10 @@ public class Paciente {
 	@Getter @Setter private Double altura;
 	@Column
 	@Getter @Setter private String cpf;
+	
+	@OneToMany(mappedBy = "paciente")
+	@JsonIgnoreProperties("paciente")
+	@Getter @Setter private Set<Consulta> consultas;
 	
 	public Paciente(String nome, String endereco, String data_nasc, String telefone, String data_primeira_consulta,
 			String email, Double peso, Double altura, String cpf) {
