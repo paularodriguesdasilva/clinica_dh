@@ -29,9 +29,9 @@ CREATE TABLE `receita` (
   `dosagem` varchar(100) NOT NULL,
   `fk_id_consulta` int(11) NOT NULL,
   PRIMARY KEY (`id_receita`),
-  KEY `fk_receita_consulta1_idx` (`consulta_id_consulta`),
-  CONSTRAINT `fk_receita_consulta1` FOREIGN KEY (`consulta_id_consulta`) REFERENCES `consulta` (`id_consulta`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `fk_receita_consulta1_idx` (`fk_id_consulta`),
+  CONSTRAINT `fk_receita_consulta1` FOREIGN KEY (`fk_id_consulta`) REFERENCES `consulta` (`id_consulta`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-14 15:36:14
+-- Dump completed on 2020-10-19 17:52:49
