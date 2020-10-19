@@ -20,20 +20,29 @@ public class Receita {
 	private String dosagem;
 	
 	@ManyToOne
-	@JoinColumn(name = "fk_receita_consulta1")
+	@JoinColumn(name = "fk_id_consulta")
 	@JsonIgnoreProperties("receitas")
 	private Consulta consulta;
 	
 	
 	public Receita() {}
 	
-	public Receita(String descricao, String tempo, String dosagem) {
+	public Receita(String descricao, String tempo, String dosagem, Consulta consulta) {
 		this.descricao = descricao;
 		this.tempo = tempo;
 		this.dosagem = dosagem;
+		this.consulta = consulta;
 	}
 	
 	
+	public Consulta getConsulta() {
+		return consulta;
+	}
+
+	public void setConsulta(Consulta consulta) {
+		this.consulta = consulta;
+	}
+
 	public int getId_receita() {
 		return id_receita;
 	}

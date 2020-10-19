@@ -10,8 +10,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.dh.clinica.model.entities.Consulta;
 import br.com.dh.clinica.model.entities.Paciente;
+import br.com.dh.clinica.model.entities.Receita;
 import br.com.dh.clinica.model.repositories.ConsultaRepository;
 import br.com.dh.clinica.model.repositories.PacienteRepository;
+import br.com.dh.clinica.model.repositories.ReceitaRepository;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -66,7 +68,7 @@ public class ReceitaRepositoryTest {
 
         this.receitaRepository.save(receita);
 
-        Receita receitaDb = this.receitaRepository.findOneById(receita.getId_receita());
+        Receita receitaDb = this.receitaRepository.findById(receita.getId_receita());
 
         Assertions.assertThat(receitaDb.getConsulta()).isNotNull();
     }
@@ -79,7 +81,7 @@ public class ReceitaRepositoryTest {
 
         this.receitaRepository.save(receita);
 
-        Assertions.assertThat(this.receitaRepository.findOneById(receita.getId_receita())).isNotNull();
+        Assertions.assertThat(this.receitaRepository.findById(receita.getId_receita())).isNotNull();
     }
 
 }

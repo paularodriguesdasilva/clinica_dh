@@ -6,4 +6,6 @@ import br.com.dh.clinica.model.entities.Receita;
 
 public interface ReceitaRepository extends CrudRepository<Receita, Integer> {
 
+	Receita findOneByTempo(String tempo);
+	Receita findById(int id);
 }
